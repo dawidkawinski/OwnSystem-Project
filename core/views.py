@@ -8,6 +8,6 @@ def student_dashboard(request):
 
 def lecturer_dashboard(request):
     context = {
-        'wiadmosc' : 'Witaj w panelu wykladowcy!',
+        'wiadomosc' : 'Witaj w panelu wykladowcy!',
     }
     return render(request, 'lecturer_dashboard.html', context)
