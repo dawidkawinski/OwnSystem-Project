@@ -11,11 +11,21 @@
 
     <div class="wrapper">
         <div class="wrapper-form">
+            <img src="{% static 'core/images/logo.png' %}" alt="Logo" class="logo-img">
             <h2>Zaloguj sie do systemu</h2>
             <p class="subtitle">Zaloguj się do systemu uczelnianego portalu.</p>
             <form method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form.non_field_errors }}
+
+                <p>
+                    <input type="text" name="username" placeholder="Identyfikator Użytkownika"
+                        autofocus required id="id_username">
+                </p>
+                <p>
+                    <input type="password" name="password" placeholder="Hasło"
+                        required id="id_password">
+                </p>
                 <button type="submit">Zaloguj</button>
             </form>
         </div>
