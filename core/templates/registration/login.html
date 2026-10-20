@@ -1,17 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logowanie do systemu</title>
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
 </head>
 <body>
-    <h2>Zaloguj sie do systemu</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Zaloguj</button>
-    </form>
+
+    <div class="wrapper">
+        <div class="wrapper-form">
+            <h2>Zaloguj sie do systemu</h2>
+            <p class="subtitle">Zaloguj się do systemu uczelnianego portalu.</p>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Zaloguj</button>
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>
