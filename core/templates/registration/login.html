@@ -13,7 +13,7 @@
         <div class="wrapper-form">
             <img src="{% static 'core/images/logo.png' %}" alt="Logo" class="logo-img">
             <h2>Zaloguj sie do systemu</h2>
-            <p class="subtitle">Zaloguj się do systemu uczelnianego portalu.</p>
+            <p class="subtitle">Zaloguj się do systemu uczelnianego portalu</p>
             <form method="POST">
                 {% csrf_token %}
                 {{ form.non_field_errors }}

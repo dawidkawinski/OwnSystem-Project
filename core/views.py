@@ -28,3 +28,9 @@ def role_redirect(request):
         return redirect('student_dashboard')
     else:
         return redirect('/admin/')
+
+@login_required
+def przycisk(request):
+    if request.method == 'POST':
+        print('Kliknieto przycisk')
+    return redirect('role_redirect')
