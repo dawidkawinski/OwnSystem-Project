@@ -12,9 +12,5 @@
     <p>Zalogowany jako: {{request.user.username}}</p>
     <hr>
     <p>To jest twoj widok uczelniany</p>
-    <form action="{% url 'przycisk' %}" method="POST">
-        {% csrf_token %}
-        <button type="submit">Zaznacz</button>
-    </form>
 </body>
 </html>
