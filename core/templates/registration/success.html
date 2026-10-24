@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Konto utworzone</title>
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="wrapper-form">
+            <h2>Konto utworzone</h2>
+            <p>Twój identyfikator do logowania:</p>
+            <h1>{{ id }}</h1>
+            <p>Zapisz go, bo będzie potrzebny przy każdym logowaniu.</p>
+            <a href="{% url 'role_redirect' %}">Przejdź do panelu</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -3,19 +3,30 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from .forms import RegisterForm
+from .models import generate_id
 
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
+            user.username = generate_id()
             user.is_student = True
             user.save()
             login(request, user)
+            request.session['new_id'] = user.username
             return redirect('role_redirect')
+            return redirect('register_success')
     else:
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form': form})     
+
+@login_required
+def register_success(request):
+    id = request.session.pop('new_id', None)
+    if not id:
+        return redirect('role_redirect')
+    return render(request, 'registration/success.html', {'id': id})
 
 
 @login_required

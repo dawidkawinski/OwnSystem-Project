@@ -5,5 +5,6 @@ urlpatterns = [
     path('student/', views.student_dashboard, name='student_dashboard'),
     path('wykladowca/', views.lecturer_dashboard, name='lecturer_dashboard'),
     path('start/', views.role_redirect, name='role_redirect'),
-    path('rejestracja/', views.register, name='register')
+    path('rejestracja/', views.register, name='register'),
+    path('rejestracja/sukces', views.register_success, name='register_success')
 ]
