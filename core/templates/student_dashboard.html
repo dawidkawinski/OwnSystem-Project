@@ -12,5 +12,11 @@
     <p>Zalogowany jako: {{request.user.first_name}}</p>
     <hr>
     <p>To jest twoj widok uczelniany</p>
+    {% if user.is_authenticated %}
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Wyloguj się</button>
+    </form>
+    {% endif %}
 </body>
 </html>
