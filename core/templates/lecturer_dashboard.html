@@ -11,7 +11,13 @@
     <h1>{{ wiadomosc }}</h1>
     <p>Zalogowany jako: {{request.user.username}}</p>
     <hr>
-    
+    <div class="candidate">
+        <ul>
+        {% for candidate in candidates %}
+            <li>{{ candidate.username }}</li>
+        {% endfor %}
+        </ul>
+    </div>
 
 </body>
 </html>

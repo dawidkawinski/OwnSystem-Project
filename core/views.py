@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from .forms import RegisterForm
-from .models import generate_id
+from .models import generate_id, User
 
 def register(request):
     if request.method == 'POST':
@@ -19,6 +19,7 @@ def register(request):
     else:
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form': form})     
+
 
 @login_required
 def register_success(request):
@@ -37,14 +38,18 @@ def student_dashboard(request):
     }
     return render(request, 'student_dashboard.html', context)
 
+
 @login_required
 def lecturer_dashboard(request):
     if not request.user.is_lecturer:
         raise PermissionDenied
+    candidates = User.objects.filter(is_student=False, is_lecturer=False)
     context = {
         'wiadomosc' : 'Witaj w panelu wykladowcy!',
+        'candidates': candidates
     }
     return render(request, 'lecturer_dashboard.html', context)
+
 
 @login_required
 def role_redirect(request):

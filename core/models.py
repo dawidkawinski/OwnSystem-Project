@@ -11,3 +11,4 @@ def generate_id():
         kandydat = ''.join(secrets.choice('0123456789') for _ in range(6))
         if not User.objects.filter(username=kandydat).exists():
             return kandydat
+
