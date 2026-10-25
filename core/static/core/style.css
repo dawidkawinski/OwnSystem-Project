@@ -63,6 +63,12 @@ body::after {
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
+.success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .register-form {
     margin-bottom: 0;
 }
@@ -142,11 +148,11 @@ form button:hover {
     text-align: center;
 }
 
-.register-link {
+.register-link, .success-link {
     text-decoration: none;
     color: #06b6d4;
 }
 
-.register-link:hover, .register-link:visited {
+.register-link:hover, .register-link:visited, .success-link:hover {
     color: #2563eb;
 }

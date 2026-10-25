@@ -8,12 +8,12 @@
 </head>
 <body>
     <div class="wrapper">
-        <div class="wrapper-form">
+        <div class="wrapper-form success">
             <h2>Konto utworzone</h2>
-            <p>Twój identyfikator do logowania:</p>
+            <p>Twój identyfikator studenta:</p>
             <h1>{{ id }}</h1>
             <p>Zapisz go, bo będzie potrzebny przy każdym logowaniu.</p>
-            <a href="{% url 'role_redirect' %}">Przejdź do panelu</a>
+            <a class="success-link" href="{% url 'role_redirect' %}">Przejdź do panelu</a>
         </div>
     </div>
 </body>

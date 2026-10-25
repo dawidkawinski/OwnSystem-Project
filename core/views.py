@@ -11,11 +11,10 @@ def register(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.username = generate_id()
-            user.is_student = True
+            # user.is_student = True
             user.save()
             login(request, user)
             request.session['new_id'] = user.username
-            return redirect('role_redirect')
             return redirect('register_success')
     else:
         form = RegisterForm()
