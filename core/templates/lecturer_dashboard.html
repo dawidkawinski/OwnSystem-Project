@@ -5,18 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel wykladowcy</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
 </head>
 <body>
     <h1>{{ wiadomosc }}</h1>
     <p>Zalogowany jako: {{request.user.username}}</p>
     <hr>
-    <div class="candidate">
-        <ul>
+    <div class="candidate-list">
+        <h2>Wnioski do rozpatrzenia</h2>
+        <div class="candidate-headers candidate-line">
+            <p>Identyfikator</p>
+            <p>Imię</p>
+            <p>Nazwisko</p>
+            <p>Przyjmij</p>
+            <p>Odrzuć</p>
+            <p>Wykładowca</p>
+        </div>  
         {% for candidate in candidates %}
-            <li>{{ candidate.username }}</li>
+            <div class="candidate-line">
+                <p>{{ candidate.username }}</p>
+                <p>{{ candidate.first_name }}</p>
+                <p>{{ candidate.last_name }}</p>
+                <form method="POST" action="{% url 'accept_student' candidate.id %}">
+                    {% csrf_token %}
+                    <button type="submit"> <i class="bi bi-check-lg"></i></button>
+                </form>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Odrzuć</button>
+                </form>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Odrzuć</button>
+                </form>
+            </div>
         {% endfor %}
-        </ul>
+        
     </div>
 
 </body>

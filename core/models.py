@@ -5,6 +5,7 @@ import secrets
 class User(AbstractUser):
     is_lecturer = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
+    is_candidate = models.BooleanField(default=False)
 
 def generate_id():
     while True:

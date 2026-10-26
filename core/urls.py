@@ -8,5 +8,6 @@ urlpatterns = [
     path('start/', views.role_redirect, name='role_redirect'),
     path('rejestracja/', views.register, name='register'),
     path('rejestracja/sukces', views.register_success, name='register_success'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout')
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('przyjmij/<int:user_id>/', views.accept_student, name='accept_student'),
 ]
