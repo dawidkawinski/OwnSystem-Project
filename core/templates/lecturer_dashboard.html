@@ -29,15 +29,15 @@
                 <p>{{ candidate.last_name }}</p>
                 <form method="POST" action="{% url 'accept_student' candidate.id %}">
                     {% csrf_token %}
-                    <button type="submit"> <i class="bi bi-check-lg"></i></button>
+                    <button type="submit"><i class="bi bi-check-lg"></i></button>
                 </form>
-                <form method="POST">
+                <form method="POST" action="{% url 'refuse_student' candidate.id %}">
                     {% csrf_token %}
-                    <button type="submit">Odrzuć</button>
+                    <button type="submit"><i class="bi bi-x-lg"></i></button>
                 </form>
-                <form method="POST">
+                <form method="POST" action="{% url 'accept_lecturer' candidate.id %}">
                     {% csrf_token %}
-                    <button type="submit">Odrzuć</button>
+                    <button type="submit"><i class="bi bi-mortarboard"></i></button>
                 </form>
             </div>
         {% endfor %}

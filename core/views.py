@@ -70,3 +70,19 @@ def accept_student(request, user_id):
     candidate.save()
     return redirect('lecturer_dashboard')
 
+
+@login_required
+@require_POST
+def refuse_student(request, user_id):
+    candidate = get_object_or_404(User, id = user_id)
+    candidate.delete()
+    return redirect('lecturer_dashboard')
+
+
+@login_required
+@require_POST
+def accept_lecturer(request, user_id):
+    candidate = get_object_or_404(User, id=user_id)
+    candidate.is_lecturer = True
+    candidate.save()
+    return redirect('lecturer_dashboard')
