@@ -34,10 +34,7 @@ def register_success(request):
 def student_dashboard(request):
     if not request.user.is_student:
         raise PermissionDenied
-    context = {
-        'wiadomosc' : 'Witaj w panelu studenta!',
-    }
-    return render(request, 'student_dashboard.html', context)
+    return render(request, 'student_dashboard.html')
 
 
 @login_required
@@ -46,7 +43,6 @@ def lecturer_dashboard(request):
         raise PermissionDenied
     candidates = User.objects.filter(is_student=False, is_lecturer=False, is_candidate=True)
     context = {
-        'wiadomosc' : 'Witaj w panelu wykladowcy!',
         'candidates': candidates
     }
     return render(request, 'lecturer_dashboard.html', context)

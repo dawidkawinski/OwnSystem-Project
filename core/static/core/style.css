@@ -157,7 +157,7 @@ form button:hover {
     color: #2563eb;
 }
 
-/*  */
+/* Lecturer dashboard  */
 table {
     border-collapse: collapse;
 }
@@ -192,4 +192,30 @@ table {
     background: none;
     border: none;
     box-shadow: none;
+}
+
+header {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 24px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    margin-top: 20px;
+    width: 100%;
+    max-width: 1300px;
+    padding: 0 30px;
+}
+
+.left-panel {
+
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    margin-right: auto;
 }

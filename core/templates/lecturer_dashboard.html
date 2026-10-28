@@ -9,40 +9,45 @@
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
 </head>
 <body>
-    <h1>{{ wiadomosc }}</h1>
-    <p>Zalogowany jako: {{request.user.username}}</p>
-    <hr>
-    <div class="candidate-list">
-        <h2>Wnioski do rozpatrzenia</h2>
-        <div class="candidate-headers candidate-line">
-            <p>Identyfikator</p>
-            <p>Imię</p>
-            <p>Nazwisko</p>
-            <p>Przyjmij</p>
-            <p>Odrzuć</p>
-            <p>Wykładowca</p>
-        </div>  
-        {% for candidate in candidates %}
-            <div class="candidate-line">
-                <p>{{ candidate.username }}</p>
-                <p>{{ candidate.first_name }}</p>
-                <p>{{ candidate.last_name }}</p>
-                <form method="POST" action="{% url 'accept_student' candidate.id %}">
-                    {% csrf_token %}
-                    <button type="submit"><i class="bi bi-check-lg"></i></button>
-                </form>
-                <form method="POST" action="{% url 'refuse_student' candidate.id %}">
-                    {% csrf_token %}
-                    <button type="submit"><i class="bi bi-x-lg"></i></button>
-                </form>
-                <form method="POST" action="{% url 'accept_lecturer' candidate.id %}">
-                    {% csrf_token %}
-                    <button type="submit"><i class="bi bi-mortarboard"></i></button>
-                </form>
-            </div>
-        {% endfor %}
-        
-    </div>
+    <div class="left-panel">
 
+    </div>
+    <div class="right-panel">
+
+        <header>
+            <h2>Witaj  {{request.user.first_name}} {{request.user.last_name}}</h2>
+        </header>
+    
+        <div class="candidate-list">
+            <h2>Wnioski do rozpatrzenia</h2>
+            <div class="candidate-headers candidate-line">
+                <p>Identyfikator</p>
+                <p>Imię</p>
+                <p>Nazwisko</p>
+                <p>Przyjmij</p>
+                <p>Odrzuć</p>
+                <p>Wykładowca</p>
+            </div>  
+            {% for candidate in candidates %}
+                <div class="candidate-line">
+                    <p>{{ candidate.username }}</p>
+                    <p>{{ candidate.first_name }}</p>
+                    <p>{{ candidate.last_name }}</p>
+                    <form method="POST" action="{% url 'accept_student' candidate.id %}">
+                        {% csrf_token %}
+                        <button type="submit"><i class="bi bi-check-lg"></i></button>
+                    </form>
+                    <form method="POST" action="{% url 'refuse_student' candidate.id %}">
+                        {% csrf_token %}
+                        <button type="submit"><i class="bi bi-x-lg"></i></button>
+                    </form>
+                    <form method="POST" action="{% url 'accept_lecturer' candidate.id %}">
+                        {% csrf_token %}
+                        <button type="submit"><i class="bi bi-mortarboard"></i></button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>
