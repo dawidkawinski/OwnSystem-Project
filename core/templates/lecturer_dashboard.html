@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,54 +9,95 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
 </head>
+
 <body>
     <div class="content">
         <div class="left-panel">
             <img src="{% static 'core/images/logo.png' %}" alt="Logo" class="logo-img">
-            
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item">
+                    <i class="bi bi-house"></i>
+                    <span>Przegląd</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="bi bi-book"></i>
+                    <span>Moje Przedmioty</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="bi bi-award"></i>
+                    <span>Wnioski</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="bi bi-people"></i>
+                    <span>Studenci</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="bi bi-envelope"></i>
+                    <span>Wiadomości</span>
+                </a>
+            </nav>
+
             {% if user.is_authenticated %}
-            <form action="{% url 'logout' %}" method="post">
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
                 {% csrf_token %}
-                <button type="submit">Wyloguj się</button>
+                <button type="submit" class="logout-btn">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Wyloguj</span>
+                </button>
             </form>
             {% endif %}
         </div>
 
         <div class="right-panel">
-
             <header>
-                <h2>Witaj,  {{request.user.first_name}} {{request.user.last_name}}</h2>
+                <h2>Witaj, {{ request.user.first_name }} {{ request.user.last_name }}</h2>
             </header>
-        
+
             <div class="candidate-list">
                 <h2>Wnioski do rozpatrzenia</h2>
-                <div class="candidate-headers candidate-line">
-                    <p>Identyfikator</p>
-                    <p>Imię</p>
-                    <p>Nazwisko</p>
-                    <p>Przyjmij</p>
-                    <p>Odrzuć</p>
-                    <p>Wykładowca</p>
-                </div>  
-                {% for candidate in candidates %}
+
+                <div class="candidate-scroll">
+                    <div class="candidate-line candidate-headers">
+                        <p>Identyfikator</p>
+                        <p>Imię</p>
+                        <p>Nazwisko</p>
+                        <p>Przyjmij</p>
+                        <p>Odrzuć</p>
+                        <p>Wykładowca</p>
+                    </div>
+
+                    {% for candidate in candidates %}
                     <div class="candidate-line">
                         <p>{{ candidate.username }}</p>
                         <p>{{ candidate.first_name }}</p>
                         <p>{{ candidate.last_name }}</p>
+
                         <form method="POST" action="{% url 'accept_student' candidate.id %}">
                             {% csrf_token %}
-                            <button type="submit"><i class="bi bi-check-lg"></i></button>
+                            <button type="submit" class="btn-accept" title="Przyjmij" aria-label="Przyjmij">
+                                <i class="bi bi-check-lg"></i>
+                            </button>
                         </form>
+
                         <form method="POST" action="{% url 'refuse_student' candidate.id %}">
                             {% csrf_token %}
-                            <button type="submit"><i class="bi bi-x-lg"></i></button>
+                            <button type="submit" class="btn-refuse" title="Odrzuć" aria-label="Odrzuć">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
                         </form>
+
                         <form method="POST" action="{% url 'accept_lecturer' candidate.id %}">
                             {% csrf_token %}
-                            <button type="submit"><i class="bi bi-mortarboard"></i></button>
+                            <button type="submit" class="btn-lecturer" title="Nadaj rolę wykładowcy" aria-label="Nadaj rolę wykładowcy">
+                                <i class="bi bi-mortarboard"></i>
+                            </button>
                         </form>
                     </div>
-                {% endfor %}
+                    {% empty %}
+                    <p class="candidate-empty">Brak wniosków do rozpatrzenia.</p>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
