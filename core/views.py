@@ -40,6 +40,24 @@ def student_master(request):
     if not request.user.is_student:
         raise PermissionDenied
     return render(request, 'student_master.html')
+
+@login_required
+def student_courses(request):
+    if not request.user.is_student:
+        raise PermissionDenied
+    return render(request, 'student_courses.html')
+
+@login_required
+def student_grades(request):
+    if not request.user.is_student:
+        raise PermissionDenied
+    return render(request, 'student_grades.html')
+
+@login_required
+def student_messages(request):
+    if not request.user.is_student:
+        raise PermissionDenied
+    return render(request, 'student_messages.html')
 #END OF STUDENT SITE
 
 #LECTURER SITE
@@ -48,16 +66,6 @@ def lecturer_dashboard(request):
     if not request.user.is_lecturer:
         raise PermissionDenied
     return render(request, 'lecturer_dashboard.html')
-
-@login_required
-def lecturer_requests(request):
-    if not request.user.is_lecturer:
-            raise PermissionDenied
-    candidates = User.objects.filter(is_student=False, is_lecturer=False, is_candidate=True)
-    context = {
-            'candidates': candidates
-        }
-    return render(request, 'lecturer_requests.html', context)
 
 @login_required
 def lecturer_master(request):
@@ -70,6 +78,16 @@ def lecturer_courses(request):
     if not request.user.is_lecturer:
                 raise PermissionDenied
     return render(request, 'lecturer_courses.html')
+
+@login_required
+def lecturer_requests(request):
+    if not request.user.is_lecturer:
+            raise PermissionDenied
+    candidates = User.objects.filter(is_student=False, is_lecturer=False, is_candidate=True)
+    context = {
+            'candidates': candidates
+        }
+    return render(request, 'lecturer_requests.html', context)
 
 @login_required
 def lecturer_students(request):
@@ -89,7 +107,7 @@ def role_redirect(request):
     if request.user.is_lecturer:
         return redirect('lecturer_master')
     elif request.user.is_student:
-        return redirect('student_dashboard')
+        return redirect('student_master')
     else:
         return redirect('/admin/')
 
