@@ -16,11 +16,11 @@
             <img src="{% static 'core/images/logo.png' %}" alt="Logo" class="logo-img">
 
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item {% if request.resolver_match.url_name == 'lecturer_master' %}active{% endif %}">
+                <a href="{% url 'lecturer_master' %}" class="nav-item {% if request.resolver_match.url_name == 'lecturer_master' %}active{% endif %}">
                     <i class="bi bi-house"></i>
                     <span>Przegląd</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="{% url 'lecturer_courses' %}" class="nav-item {% if request.resolver_match.url_name == 'lecturer_courses' %} active {% endif %}">
                     <i class="bi bi-book"></i>
                     <span>Moje Przedmioty</span>
                 </a>
@@ -28,11 +28,11 @@
                     <i class="bi bi-award"></i>
                     <span>Wnioski</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="{% url 'lecturer_students' %}" class="nav-item {% if request.resolver_match.url_name == 'lecturer_students' %}active{% endif %}">
                     <i class="bi bi-people"></i>
                     <span>Studenci</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="{% url 'lecturer_messages' %}" class="nav-item {% if request.resolver_match.url_name == 'lecturer_messages' %}active{% endif %}">
                     <i class="bi bi-envelope"></i>
                     <span>Wiadomości</span>
                 </a>

@@ -58,14 +58,30 @@ def lecturer_master(request):
     if not request.user.is_lecturer:
                 raise PermissionDenied
     return render(request, 'lecturer_master.html')
+
+@login_required
+def lecturer_courses(request):
+    if not request.user.is_lecturer:
+                raise PermissionDenied
+    return render(request, 'lecturer_courses.html')
+
+@login_required
+def lecturer_students(request):
+    if not request.user.is_lecturer:
+                raise PermissionDenied
+    return render(request, 'lecturer_students.html')
+
+@login_required
+def lecturer_messages(request):
+    if not request.user.is_lecturer:
+                raise PermissionDenied
+    return render(request, 'lecturer_messages.html')
 #END OF LECTURER SITE
-
-
 
 @login_required
 def role_redirect(request):
     if request.user.is_lecturer:
-        return redirect('lecturer_dashboard')
+        return redirect('lecturer_master')
     elif request.user.is_student:
         return redirect('student_dashboard')
     else:
