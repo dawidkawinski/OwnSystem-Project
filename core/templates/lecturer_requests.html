@@ -1,0 +1,49 @@
+{% extends 'lecturer_dashboard.html' %}
+
+{% block content %}
+<div class="candidate-list">
+    <h2>Wnioski do rozpatrzenia</h2>
+
+    <div class="candidate-scroll">
+        <div class="candidate-line candidate-headers">
+            <p>Identyfikator</p>
+            <p>Imię</p>
+            <p>Nazwisko</p>
+            <p>Przyjmij</p>
+            <p>Odrzuć</p>
+            <p>Wykładowca</p>
+        </div>
+
+        {% for candidate in candidates %}
+        <div class="candidate-line">
+            <p>{{ candidate.username }}</p>
+            <p>{{ candidate.first_name }}</p>
+            <p>{{ candidate.last_name }}</p>
+
+            <form method="POST" action="{% url 'accept_student' candidate.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-accept" title="Przyjmij" aria-label="Przyjmij">
+                    <i class="bi bi-check-lg"></i>
+                </button>
+            </form>
+
+            <form method="POST" action="{% url 'refuse_student' candidate.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-refuse" title="Odrzuć" aria-label="Odrzuć">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </form>
+
+            <form method="POST" action="{% url 'accept_lecturer' candidate.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-lecturer" title="Nadaj rolę wykładowcy" aria-label="Nadaj rolę wykładowcy">
+                    <i class="bi bi-mortarboard"></i>
+                </button>
+            </form>
+        </div>
+        {% empty %}
+        <p class="candidate-empty">Brak wniosków do rozpatrzenia.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -21,7 +21,6 @@ def register(request):
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form': form})     
 
-
 @login_required
 def register_success(request):
     id = request.session.pop('new_id', None)
@@ -29,23 +28,38 @@ def register_success(request):
         return redirect('role_redirect')
     return render(request, 'registration/success.html', {'id': id})
 
-
+#STUDENT SITE
 @login_required
 def student_dashboard(request):
     if not request.user.is_student:
         raise PermissionDenied
     return render(request, 'student_dashboard.html')
+#END OF STUDENT SITE
 
-
+#LECTURER SITE
 @login_required
 def lecturer_dashboard(request):
     if not request.user.is_lecturer:
         raise PermissionDenied
+    return render(request, 'lecturer_dashboard.html')
+
+@login_required
+def lecturer_requests(request):
+    if not request.user.is_lecturer:
+            raise PermissionDenied
     candidates = User.objects.filter(is_student=False, is_lecturer=False, is_candidate=True)
     context = {
-        'candidates': candidates
-    }
-    return render(request, 'lecturer_dashboard.html', context)
+            'candidates': candidates
+        }
+    return render(request, 'lecturer_requests.html', context)
+
+@login_required
+def lecturer_master(request):
+    if not request.user.is_lecturer:
+                raise PermissionDenied
+    return render(request, 'lecturer_master.html')
+#END OF LECTURER SITE
+
 
 
 @login_required

@@ -16,7 +16,7 @@
             <img src="{% static 'core/images/logo.png' %}" alt="Logo" class="logo-img">
 
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item {% if request.resolver_match.url_name == 'lecturer_master' %}active{% endif %}">
                     <i class="bi bi-house"></i>
                     <span>Przegląd</span>
                 </a>
@@ -24,7 +24,7 @@
                     <i class="bi bi-book"></i>
                     <span>Moje Przedmioty</span>
                 </a>
-                <a href="#" class="nav-item active">
+                <a href="{% url 'lecturer_requests' %}" class="nav-item {% if request.resolver_match.url_name == 'lecturer_requests' %}active{% endif %}">
                     <i class="bi bi-award"></i>
                     <span>Wnioski</span>
                 </a>
@@ -54,51 +54,8 @@
                 <h2>Witaj, {{ request.user.first_name }} {{ request.user.last_name }}</h2>
             </header>
 
-            <div class="candidate-list">
-                <h2>Wnioski do rozpatrzenia</h2>
+             {% block content %}{% endblock %}
 
-                <div class="candidate-scroll">
-                    <div class="candidate-line candidate-headers">
-                        <p>Identyfikator</p>
-                        <p>Imię</p>
-                        <p>Nazwisko</p>
-                        <p>Przyjmij</p>
-                        <p>Odrzuć</p>
-                        <p>Wykładowca</p>
-                    </div>
-
-                    {% for candidate in candidates %}
-                    <div class="candidate-line">
-                        <p>{{ candidate.username }}</p>
-                        <p>{{ candidate.first_name }}</p>
-                        <p>{{ candidate.last_name }}</p>
-
-                        <form method="POST" action="{% url 'accept_student' candidate.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-accept" title="Przyjmij" aria-label="Przyjmij">
-                                <i class="bi bi-check-lg"></i>
-                            </button>
-                        </form>
-
-                        <form method="POST" action="{% url 'refuse_student' candidate.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-refuse" title="Odrzuć" aria-label="Odrzuć">
-                                <i class="bi bi-x-lg"></i>
-                            </button>
-                        </form>
-
-                        <form method="POST" action="{% url 'accept_lecturer' candidate.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-lecturer" title="Nadaj rolę wykładowcy" aria-label="Nadaj rolę wykładowcy">
-                                <i class="bi bi-mortarboard"></i>
-                            </button>
-                        </form>
-                    </div>
-                    {% empty %}
-                    <p class="candidate-empty">Brak wniosków do rozpatrzenia.</p>
-                    {% endfor %}
-                </div>
-            </div>
         </div>
     </div>
 </body>

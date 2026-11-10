@@ -5,6 +5,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('student/', views.student_dashboard, name='student_dashboard'),
     path('wykladowca/', views.lecturer_dashboard, name='lecturer_dashboard'),
+    path('wnioski/', views.lecturer_requests, name='lecturer_requests'),
     path('start/', views.role_redirect, name='role_redirect'),
     path('rejestracja/', views.register, name='register'),
     path('rejestracja/sukces', views.register_success, name='register_success'),
