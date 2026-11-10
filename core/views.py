@@ -34,6 +34,12 @@ def student_dashboard(request):
     if not request.user.is_student:
         raise PermissionDenied
     return render(request, 'student_dashboard.html')
+
+@login_required
+def student_master(request):
+    if not request.user.is_student:
+        raise PermissionDenied
+    return render(request, 'student_master.html')
 #END OF STUDENT SITE
 
 #LECTURER SITE
@@ -56,7 +62,7 @@ def lecturer_requests(request):
 @login_required
 def lecturer_master(request):
     if not request.user.is_lecturer:
-                raise PermissionDenied
+            raise PermissionDenied
     return render(request, 'lecturer_master.html')
 
 @login_required

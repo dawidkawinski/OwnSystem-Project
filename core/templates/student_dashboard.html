@@ -16,7 +16,7 @@
             <img src="{% static 'core/images/logo.png' %}" alt="Logo" class="logo-img">
 
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active">
+                <a href="{% url 'student_master' %}" class="nav-item {% if request.resolver_match.url_name == 'student_master' %}active{% endif %}">
                     <i class="bi bi-house"></i>
                     <span>Przegląd</span>
                 </a>
@@ -50,26 +50,10 @@
                 <h2>Witaj, {{ user.first_name }} {{ user.last_name }}</h2>
             </header>
 
-            <div class="cards-grid">
-                <div class="info-card">
-                    <h3><i class="bi bi-person-badge"></i> Moje dane</h3>
-                    <p><span>Identyfikator</span> {{ user.username }}</p>
-                    <p><span>Imię</span> {{ user.first_name }}</p>
-                    <p><span>Nazwisko</span> {{ user.last_name }}</p>
-                    <p><span>E-mail</span> {{ user.email|default:"brak" }}</p>
-                </div>
+            {% block content %}{% endblock %}
 
-                <div class="info-card">
-                    <h3><i class="bi bi-book"></i> Moje przedmioty</h3>
-                    <p class="card-empty">Nie masz jeszcze przypisanych przedmiotów.</p>
-                </div>
-
-                <div class="info-card">
-                    <h3><i class="bi bi-award"></i> Ostatnie oceny</h3>
-                    <p class="card-empty">Brak ocen.</p>
-                </div>
-            </div>
         </div>
+        
     </div>
 </body>
 
