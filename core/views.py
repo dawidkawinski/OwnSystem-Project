@@ -71,7 +71,14 @@ def lecturer_dashboard(request):
 def lecturer_master(request):
     if not request.user.is_lecturer:
             raise PermissionDenied
-    return render(request, 'lecturer_master.html')
+    pending = User.objects.filter(is_candidate=True, is_student=False, is_lecturer=False)
+    context = {
+        'pending_count': pending.count(),
+        'students_count': User.objects.filter(is_student=True).count(),
+        'lecturers_count': User.objects.filter(is_lecturer=True).count(),
+        'recent_requests': pending.order_by('-date_joined')[:5],
+    }
+    return render(request, 'lecturer_master.html', context)
 
 @login_required
 def lecturer_courses(request):
@@ -93,7 +100,11 @@ def lecturer_requests(request):
 def lecturer_students(request):
     if not request.user.is_lecturer:
                 raise PermissionDenied
-    return render(request, 'lecturer_students.html')
+    students = User.objects.filter(is_student=True).order_by('last_name', 'first_name')
+    context = {
+         'students': students
+    }
+    return render(request, 'lecturer_students.html', context)
 
 @login_required
 def lecturer_messages(request):

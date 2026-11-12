@@ -1,5 +1,27 @@
 {% extends 'lecturer_dashboard.html' %}
 
 {% block content %}
-<h2>Studenci</h2>
+<div class="candidate-list" style="--columns: 1fr 1fr 1fr 1.5fr;">
+    <h2>Studenci</h2>
+
+    <div class="candidate-scroll">
+        <div class="candidate-line candidate-headers">
+            <p>Identyfikator</p>
+            <p>Imię</p>
+            <p>Nazwisko</p>
+            <p>E-mail</p>
+        </div>
+
+        {% for student in students %}
+        <div class="candidate-line">
+            <p>{{ student.username }}</p>
+            <p>{{ student.first_name }}</p>
+            <p>{{ student.last_name }}</p>
+            <p>{{ student.email|default:"-" }}</p>
+        </div>
+        {% empty %}
+        <p class="candidate-empty">Brak studentów.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
