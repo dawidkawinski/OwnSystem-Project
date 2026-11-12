@@ -3,8 +3,9 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from .forms import RegisterForm
-from .models import generate_id, User
+from .models import generate_id, User, Ocena
 from django.views.decorators.http import require_POST
+from django.db.models import Avg
 
 def register(request):
     if request.method == 'POST':
@@ -39,19 +40,28 @@ def student_dashboard(request):
 def student_master(request):
     if not request.user.is_student:
         raise PermissionDenied
-    return render(request, 'student_master.html')
+    oceny = Ocena.objects.filter(student=request.user).order_by('-data_wystawienia', '-id')
+    srednia = oceny.aggregate(Avg('wartosc'))['wartosc__avg']
+    context = {
+        'grades_count': oceny.count(),
+        'average_grade': round(srednia, 2) if srednia else '-',
+        'recent_grades': oceny[:5],
+    }
+    return render(request, 'student_master.html', context)
 
 @login_required
 def student_courses(request):
     if not request.user.is_student:
         raise PermissionDenied
-    return render(request, 'student_courses.html')
+    przedmioty = Ocena.objects.filter(student=request.user).values_list('przedmiot', flat=True).distinct()
+    return render(request, 'student_courses.html', {'przedmioty': przedmioty})
 
 @login_required
 def student_grades(request):
     if not request.user.is_student:
         raise PermissionDenied
-    return render(request, 'student_grades.html')
+    oceny = Ocena.objects.filter(student=request.user).order_by('-data_wystawienia', '-id')
+    return render(request, 'student_grades.html', {'oceny': oceny})
 
 @login_required
 def student_messages(request):
@@ -83,8 +93,37 @@ def lecturer_master(request):
 @login_required
 def lecturer_courses(request):
     if not request.user.is_lecturer:
-                raise PermissionDenied
-    return render(request, 'lecturer_courses.html')
+        raise PermissionDenied
+    if request.method == 'POST':
+        student_username = request.POST.get('student')
+        przedmiot = request.POST.get('przedmiot')
+        wartosc = request.POST.get('wartosc')
+        
+        if student_username and przedmiot and wartosc:
+            student_obj = get_object_or_404(User, username=student_username, is_student=True)
+            Ocena.objects.create(
+                student=student_obj,
+                przedmiot=przedmiot,
+                wartosc=wartosc
+            )
+            return redirect('lecturer_courses')
+
+    students = User.objects.filter(is_student=True).order_by('last_name', 'first_name')
+    oceny = Ocena.objects.select_related('student').order_by('-data_wystawienia', '-id')
+    context = {
+        'students': students,
+        'oceny': oceny,
+    }
+    return render(request, 'lecturer_courses.html', context)
+
+@login_required
+@require_POST
+def delete_grade(request, grade_id):
+    if not request.user.is_lecturer:
+        raise PermissionDenied
+    ocena = get_object_or_404(Ocena, id=grade_id)
+    ocena.delete()
+    return redirect('lecturer_courses')
 
 @login_required
 def lecturer_requests(request):
@@ -129,7 +168,7 @@ def accept_student(request, user_id):
     candidate = get_object_or_404(User, id=user_id)
     candidate.is_student = True
     candidate.save()
-    return redirect('lecturer_dashboard')
+    return redirect('lecturer_requests')
 
 
 @login_required
@@ -137,7 +176,7 @@ def accept_student(request, user_id):
 def refuse_student(request, user_id):
     candidate = get_object_or_404(User, id = user_id)
     candidate.delete()
-    return redirect('lecturer_dashboard')
+    return redirect('lecturer_requests')
 
 
 @login_required
@@ -146,4 +185,4 @@ def accept_lecturer(request, user_id):
     candidate = get_object_or_404(User, id=user_id)
     candidate.is_lecturer = True
     candidate.save()
-    return redirect('lecturer_dashboard')
+    return redirect('lecturer_requests')

@@ -21,4 +21,5 @@ urlpatterns = [
     path('przyjmij/<int:user_id>/', views.accept_student, name='accept_student'),
     path('odrzuc/<int:user_id>/', views.refuse_student, name='refuse_student'),
     path('wykladowca/<int:user_id>/', views.accept_lecturer, name='accept_lecturer'),
+    path('oceny/usun/<int:grade_id>/', views.delete_grade, name='delete_grade'),
 ]

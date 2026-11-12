@@ -443,3 +443,99 @@ a.stat-card:hover {
 .stat-link:hover {
     color: #67e8f9;
 }
+
+/* Panel zarządzania ocenami i pigułki ocen */
+.grade-panel {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 24px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    margin-top: 20px;
+    width: 99%;
+    padding: 24px 30px;
+}
+
+.grade-panel h2 {
+    margin: 0 0 16px;
+    font-size: 20px;
+}
+
+.grade-form-inline {
+    display: grid;
+    grid-template-columns: 1.2fr 1.5fr 1fr auto;
+    gap: 14px;
+    align-items: center;
+}
+
+.grade-form-inline select,
+.grade-form-inline input {
+    padding: 11px 18px;
+    background: rgba(10, 16, 51, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.grade-form-inline select option {
+    background: #0a1033;
+    color: white;
+}
+
+.grade-form-inline select:focus,
+.grade-form-inline input:focus {
+    border-color: #22d3ee;
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.4);
+}
+
+.btn-add-grade {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 24px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #06b6d4, #22d3ee);
+    color: #0a1033;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-add-grade:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(34, 211, 238, 0.45);
+}
+
+.grade-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.grade-good {
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid #22c55e;
+    color: #86efac;
+}
+
+.grade-mid {
+    background: rgba(234, 179, 8, 0.2);
+    border: 1px solid #eab308;
+    color: #fde047;
+}
+
+.grade-fail {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid #ef4444;
+    color: #fca5a5;
+}

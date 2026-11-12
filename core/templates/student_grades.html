@@ -1,5 +1,29 @@
 {% extends 'student_dashboard.html' %}
 
 {% block content %}
-<h2>Oceny</h2>
+<div class="candidate-list" style="--columns: 1.5fr 1fr 1fr;">
+    <h2>Moje Oceny</h2>
+
+    <div class="candidate-scroll">
+        <div class="candidate-line candidate-headers">
+            <p>Przedmiot</p>
+            <p>Ocena</p>
+            <p>Data wystawienia</p>
+        </div>
+
+        {% for ocena in oceny %}
+        <div class="candidate-line">
+            <p>{{ ocena.przedmiot }}</p>
+            <p>
+                <span class="grade-badge {% if ocena.wartosc == 2.0 %}grade-fail{% elif ocena.wartosc >= 4.0 %}grade-good{% else %}grade-mid{% endif %}">
+                    {{ ocena.wartosc }}
+                </span>
+            </p>
+            <p>{{ ocena.data_wystawienia|date:"d.m.Y" }}</p>
+        </div>
+        {% empty %}
+        <p class="candidate-empty">Brak ocen w indeksie.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

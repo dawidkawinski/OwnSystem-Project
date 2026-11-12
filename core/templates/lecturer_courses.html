@@ -1,5 +1,68 @@
 {% extends 'lecturer_dashboard.html' %}
 
 {% block content %}
-<h2>Moje przedmioty</h2>
+<div class="grade-panel">
+    <h2>Zarządzanie Ocenami i Przedmiotami</h2>
+    <form method="POST" class="grade-form-inline">
+        {% csrf_token %}
+        <select name="student" required>
+            <option value="" disabled selected>Wybierz studenta...</option>
+            {% for s in students %}
+            <option value="{{ s.username }}">{{ s.first_name }} {{ s.last_name }} ({{ s.username }})</option>
+            {% endfor %}
+        </select>
+
+        <input type="text" name="przedmiot" placeholder="Nazwa przedmiotu (np. Algorytmy)" required maxlength="100">
+
+        <select name="wartosc" required>
+            <option value="" disabled selected>Ocena...</option>
+            <option value="2.0">2.0 (Niedostateczny)</option>
+            <option value="3.0">3.0 (Dostateczny)</option>
+            <option value="3.5">3.5 (Dość dobry)</option>
+            <option value="4.0">4.0 (Dobry)</option>
+            <option value="4.5">4.5 (Ponad dobry)</option>
+            <option value="5.0">5.0 (Bardzo dobry)</option>
+        </select>
+
+        <button type="submit" class="btn-add-grade">
+            <i class="bi bi-plus-lg"></i> Dodaj ocenę
+        </button>
+    </form>
+</div>
+
+<div class="candidate-list" style="--columns: 1.3fr 1.5fr 0.8fr 1fr 0.6fr;">
+    <h2>Wystawione oceny</h2>
+
+    <div class="candidate-scroll">
+        <div class="candidate-line candidate-headers">
+            <p>Student</p>
+            <p>Przedmiot</p>
+            <p>Ocena</p>
+            <p>Data wystawienia</p>
+            <p>Usuń</p>
+        </div>
+
+        {% for ocena in oceny %}
+        <div class="candidate-line">
+            <p>{{ ocena.student.first_name }} {{ ocena.student.last_name }} <span style="opacity: 0.6; font-size: 12px;">({{ ocena.student.username }})</span></p>
+            <p>{{ ocena.przedmiot }}</p>
+            <p>
+                <span class="grade-badge {% if ocena.wartosc == 2.0 %}grade-fail{% elif ocena.wartosc >= 4.0 %}grade-good{% else %}grade-mid{% endif %}">
+                    {{ ocena.wartosc }}
+                </span>
+            </p>
+            <p>{{ ocena.data_wystawienia|date:"d.m.Y" }}</p>
+
+            <form method="POST" action="{% url 'delete_grade' ocena.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-refuse" title="Usuń ocenę">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </form>
+        </div>
+        {% empty %}
+        <p class="candidate-empty">Brak wystawionych ocen w systemie.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

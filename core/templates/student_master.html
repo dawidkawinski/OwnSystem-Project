@@ -1,23 +1,57 @@
 {% extends 'student_dashboard.html' %}
 
 {% block content %}
-<div class="cards-grid">
-    <div class="info-card">
-        <h3><i class="bi bi-person-badge"></i> Moje dane</h3>
-        <p><span>Identyfikator</span> {{ user.username }}</p>
-        <p><span>Imię</span> {{ user.first_name }}</p>
-        <p><span>Nazwisko</span> {{ user.last_name }}</p>
-        <p><span>E-mail</span> {{ user.email|default:"brak" }}</p>
+<div class="stats-grid">
+    <a href="{% url 'student_grades' %}" class="stat-card">
+        <i class="bi bi-graph-up-arrow stat-icon"></i>
+        <div>
+            <div class="stat-value">{{ average_grade }}</div>
+            <div class="stat-label">Średnia ocen</div>
+        </div>
+    </a>
+
+    <a href="{% url 'student_grades' %}" class="stat-card">
+        <i class="bi bi-award stat-icon"></i>
+        <div>
+            <div class="stat-value">{{ grades_count }}</div>
+            <div class="stat-label">Wystawione oceny</div>
+        </div>
+    </a>
+
+    <div class="stat-card">
+        <i class="bi bi-person-badge stat-icon"></i>
+        <div>
+            <div class="stat-value">{{ request.user.username }}</div>
+            <div class="stat-label">Numer albumu</div>
+        </div>
+    </div>
+</div>
+
+<div class="candidate-list" style="--columns: 1.5fr 1fr 1fr;">
+    <h2>Ostatnie oceny</h2>
+
+    <div class="candidate-scroll">
+        <div class="candidate-line candidate-headers">
+            <p>Przedmiot</p>
+            <p>Ocena</p>
+            <p>Data wystawienia</p>
+        </div>
+
+        {% for ocena in recent_grades %}
+        <div class="candidate-line">
+            <p>{{ ocena.przedmiot }}</p>
+            <p>
+                <span class="grade-badge {% if ocena.wartosc == 2.0 %}grade-fail{% elif ocena.wartosc >= 4.0 %}grade-good{% else %}grade-mid{% endif %}">
+                    {{ ocena.wartosc }}
+                </span>
+            </p>
+            <p>{{ ocena.data_wystawienia|date:"d.m.Y" }}</p>
+        </div>
+        {% empty %}
+        <p class="candidate-empty">Nie masz jeszcze żadnych ocen.</p>
+        {% endfor %}
     </div>
 
-    <div class="info-card">
-        <h3><i class="bi bi-book"></i> Moje przedmioty</h3>
-        <p class="card-empty">Nie masz jeszcze przypisanych przedmiotów.</p>
-    </div>
-
-    <div class="info-card">
-        <h3><i class="bi bi-award"></i> Ostatnie oceny</h3>
-        <p class="card-empty">Brak ocen.</p>
-    </div>
+    <a href="{% url 'student_grades' %}" class="stat-link">Zobacz wszystkie oceny <i class="bi bi-arrow-right"></i></a>
 </div>
 {% endblock %}
