@@ -43,12 +43,12 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Aby zalogować się do panelu studenta:
-Identyfikator: 019659
+Aby zalogować się do panelu studenta:\
+Identyfikator: 019659\
 Hasło: dawid123
 
-Aby zalogować się do panelu wykładowcy:
-Identyfikator: 369830
+Aby zalogować się do panelu wykładowcy:\
+Identyfikator: 369830\
 Hasło: dawid123
 
 🎉 **Aplikacja jest już aktywna!** Otwórz przeglądarkę i wejdź pod adres:
