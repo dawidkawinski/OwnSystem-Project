@@ -51,6 +51,6 @@ Aby zalogować się do panelu wykładowcy:\
 Identyfikator: 369830\
 Hasło: dawid123
 
-🎉 **Aplikacja jest już aktywna!** Otwórz przeglądarkę i wejdź pod adres:
+🎉 Otwórz przeglądarkę i wejdź pod adres:
 * **Logowanie:** [http://127.0.0.1:8000/konta/login/](http://127.0.0.1:8000/konta/login/)
 * **Rejestracja kandydata:** [http://127.0.0.1:8000/rejestracja/](http://127.0.0.1:8000/rejestracja/)
